@@ -1,0 +1,16 @@
+{
+  "name": "application_menu_sample",
+  "productName": "application_menu_sample_product_name",
+  "version": "0.1.0",
+  "description": "Sample app from pluralsight",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Anthony Garo",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^1.8.2"
+  }
+}
