@@ -1,5 +1,6 @@
 {
   "name": "electron_sample_app",
+  "productname": "Photobombth",
   "version": "1.0.0",
   "description": "Photobooth App",
   "main": "src/main.js",

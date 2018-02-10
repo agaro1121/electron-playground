@@ -72,3 +72,8 @@ window.addEventListener('DOMContentLoaded', _ => {
 ipc.on('image-removed', (evt, index) => {
     document.getElementById('photos').removeChild(Array.from(document.querySelectorAll('.photo'))[index]);
 });
+
+ipc.on('effect-choose', (evt, effectName) => {
+    // TODO: need to create effects js file
+    console.log('selected: '+ effectName)
+});
