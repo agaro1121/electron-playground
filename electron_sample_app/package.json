@@ -1,0 +1,15 @@
+{
+  "name": "electron_sample_app",
+  "version": "1.0.0",
+  "description": "Photobooth App",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.8.2"
+  }
+}
