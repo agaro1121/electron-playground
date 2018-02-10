@@ -1,3 +1,10 @@
+function otherEffects(seriously, src, target, effectName) {
+    const effect = seriously.effect(effectName);
+    effect.source = src;
+    target.source = effect;
+    seriously.go()
+}
+
 const effects = {
     vanilla: (seriously, src, target) => {
         target.source = src;
@@ -8,7 +15,20 @@ const effects = {
         ascii.source = src;
         target.source = ascii;
         seriously.go()
-    }
+    },
+    daltonize: (seriously, src, target) => otherEffects(seriously, src, target, 'daltonize'),
+    filmgrain: (seriously, src, target) => otherEffects(seriously, src, target, 'filmgrain'),
+    hex: (seriously, src, target) => otherEffects(seriously, src, target, 'hex'),
+    kaleidoscope: (seriously, src, target) => otherEffects(seriously, src, target, 'kaleidoscope'),
+    mirror: (seriously, src, target) => otherEffects(seriously, src, target, 'mirror'),
+    nightvision: (seriously, src, target) => otherEffects(seriously, src, target, 'nightvision'),
+    pixelate: (seriously, src, target) => otherEffects(seriously, src, target, 'pixelate'),
+    ripple: (seriously, src, target) => otherEffects(seriously, src, target, 'ripple'),
+    scanlines: (seriously, src, target) => otherEffects(seriously, src, target, 'scanlines'),
+    sketch: (seriously, src, target) => otherEffects(seriously, src, target, 'sketch'),
+    vibrance: (seriously, src, target) => otherEffects(seriously, src, target, 'vibrance'),
+    vignette: (seriously, src, target) => otherEffects(seriously, src, target, 'vignette')
+
 };
 
 const effectNames = Object.keys(effects);
@@ -34,3 +54,4 @@ exports.cycle = (seriously, src, target) => {
     setNextIndex();
     effects[effectNames[currentIndex]](seriously, src, target);
 };
+

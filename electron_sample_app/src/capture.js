@@ -5,13 +5,20 @@ const video = require('./video');
 const countdown = require('./countdown');
 const {ipcRenderer: ipc, shell, remote} = require('electron');
 const flash = require('./flash');
+const effects = require('./effects');
+
+
+
 // remote is a simple way to do ipc between renderer and Main processes
-
-
 // remote.require -> as if calling require in the main process
 // calling vanilla require would never give us access to the cache
 // because it was created in the Main process
 const images = remote.require('./images');
+
+
+let canvasTarget;
+let seriously;
+let videoSrc;
 
 function formatImgTag(doc, bytes) {
     const div = doc.createElement('div');
@@ -38,7 +45,13 @@ window.addEventListener('DOMContentLoaded', _ => {
     const counterEl = document.getElementById('counter');
     const flashEl = document.getElementById('flash');
 
-    const ctx = canvasEl.getContext('2d');
+    // don't need this since Seriously will do this for us
+    // const ctx = canvasEl.getContext('2d');
+
+    seriously = new Seriously();
+    videoSrc = seriously.source('#video');
+    canvasTarget = seriously.target('#canvas');
+    effects.choose(seriously, videoSrc, canvasTarget, 'ascii');
 
     video.init(navigator, videoEl);
 
@@ -46,7 +59,7 @@ window.addEventListener('DOMContentLoaded', _ => {
         console.log('CLICKED!');
         countdown.start(counterEl, 3, _ => {
             flash(flashEl);
-            const bytes = video.captureBytes(videoEl, ctx, canvasEl);
+            const bytes = video.captureBytesFromLiveCanvas(canvasEl);
             ipc.send('image-captured', bytes);
             photosEl.appendChild(formatImgTag(document, bytes));
         });
@@ -75,5 +88,11 @@ ipc.on('image-removed', (evt, index) => {
 
 ipc.on('effect-choose', (evt, effectName) => {
     // TODO: need to create effects js file
-    console.log('selected: '+ effectName)
+    console.log('selected: '+ effectName);
+    effects.choose(seriously, videoSrc, canvasTarget, effectName);
+});
+
+ipc.on('effect-cycle', evt => {
+    console.log('you wanna cycle?!?!');
+    effects.cycle(seriously, videoSrc, canvasTarget);
 });
